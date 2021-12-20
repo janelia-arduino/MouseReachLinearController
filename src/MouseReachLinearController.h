@@ -1,12 +1,12 @@
 // ----------------------------------------------------------------------------
-// PelletDispenser.h
+// MouseReachLinearController.h
 //
 //
 // Authors:
 // Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
-#ifndef PELLET_DISPENSER_H
-#define PELLET_DISPENSER_H
+#ifndef MOUSE_REACH_LINEAR_CONTROLLER_H
+#define MOUSE_REACH_LINEAR_CONTROLLER_H
 #include <ArduinoJson.h>
 #include <JsonStream.h>
 #include <Array.h>
@@ -26,17 +26,17 @@
 #include <StepperController.h>
 #include <StageController.h>
 
-#include "PelletDispenser/Constants.h"
+#include "MouseReachLinearController/Constants.h"
 
 
-class PelletDispenser : public StageController
+class MouseReachLinearController : public StageController
 {
 public:
-  PelletDispenser();
+  MouseReachLinearController();
   virtual void setup();
   virtual void update();
 
-  pellet_dispenser::constants::AssayStatus getAssayStatus();
+  mouse_reach_linear_controller::constants::AssayStatus getAssayStatus();
   StageController::PositionArray getBuzzPosition();
   StageController::PositionArray getLoadPosition();
   StageController::PositionArray getNextDeliverPosition();
@@ -81,13 +81,13 @@ public:
   void abort();
 
 private:
-  modular_server::Property properties_[pellet_dispenser::constants::PROPERTY_COUNT_MAX];
-  modular_server::Parameter parameters_[pellet_dispenser::constants::PARAMETER_COUNT_MAX];
-  modular_server::Function functions_[pellet_dispenser::constants::FUNCTION_COUNT_MAX];
-  modular_server::Callback callbacks_[pellet_dispenser::constants::CALLBACK_COUNT_MAX];
+  modular_server::Property properties_[mouse_reach_linear_controller::constants::PROPERTY_COUNT_MAX];
+  modular_server::Parameter parameters_[mouse_reach_linear_controller::constants::PARAMETER_COUNT_MAX];
+  modular_server::Function functions_[mouse_reach_linear_controller::constants::FUNCTION_COUNT_MAX];
+  modular_server::Callback callbacks_[mouse_reach_linear_controller::constants::CALLBACK_COUNT_MAX];
 
-  pellet_dispenser::constants::AssayStatus assay_status_;
-  EventController<pellet_dispenser::constants::EVENT_COUNT_MAX> event_controller_;
+  mouse_reach_linear_controller::constants::AssayStatus assay_status_;
+  EventController<mouse_reach_linear_controller::constants::EVENT_COUNT_MAX> event_controller_;
 
   ModularClient * audio_controller_ptr_;
   ModularClient * power_switch_controller_ptr_;

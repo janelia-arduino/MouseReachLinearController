@@ -5,8 +5,8 @@
 // Authors:
 // Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
-#ifndef PELLET_DISPENSER_CONSTANTS_H
-#define PELLET_DISPENSER_CONSTANTS_H
+#ifndef MOUSE_REACH_LINEAR_CONTROLLER_CONSTANTS_H
+#define MOUSE_REACH_LINEAR_CONTROLLER_CONSTANTS_H
 #include <ConstantVariable.h>
 #include <StepDirController.h>
 #include <StepperController.h>
@@ -16,7 +16,7 @@
 #include <PowerSwitchController.h>
 
 
-namespace pellet_dispenser
+namespace mouse_reach_linear_controller
 {
 namespace constants
 {

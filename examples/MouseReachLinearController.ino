@@ -1,7 +1,7 @@
-#include <PelletDispenser.h>
+#include <MouseReachLinearController.h>
 
 
-PelletDispenser dev;
+MouseReachLinearController dev;
 
 void setup()
 {

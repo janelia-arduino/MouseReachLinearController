@@ -1,20 +1,20 @@
 // ----------------------------------------------------------------------------
-// PelletDispenser.cpp
+// MouseReachLinearController.cpp
 //
 //
 // Authors:
 // Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
-#include "../PelletDispenser.h"
+#include "../MouseReachLinearController.h"
 
 
-using namespace pellet_dispenser;
+using namespace mouse_reach_linear_controller;
 
-PelletDispenser::PelletDispenser()
+MouseReachLinearController::MouseReachLinearController()
 {
 }
 
-void PelletDispenser::setup()
+void MouseReachLinearController::setup()
 {
   // Parent Setup
   StageController::setup();
@@ -157,7 +157,7 @@ void PelletDispenser::setup()
   tap_count_property.setRange(constants::tap_count_min,constants::tap_count_max);
 
   modular_server::Property & dispense_velocity_property = modular_server_.createProperty(constants::dispense_velocity_property_name,constants::dispense_velocity_default);
-  dispense_velocity_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<size_t> *)0,*this,&PelletDispenser::setDispenseVelocityLimitHandler));
+  dispense_velocity_property.attachPostSetElementValueFunctor(makeFunctor((Functor1<size_t> *)0,*this,&MouseReachLinearController::setDispenseVelocityLimitHandler));
   dispense_velocity_property.setUnits(step_dir_controller::constants::position_units_per_second_units);
   dispense_velocity_property.setRange(constants::dispense_velocity_min,constants::dispense_velocity_max);
 
@@ -167,40 +167,40 @@ void PelletDispenser::setup()
 
   // Functions
   modular_server::Function & set_client_property_values_function = modular_server_.createFunction(constants::set_client_property_values_function_name);
-  set_client_property_values_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&PelletDispenser::setClientPropertyValuesHandler));
+  set_client_property_values_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&MouseReachLinearController::setClientPropertyValuesHandler));
   set_client_property_values_function.setResultTypeObject();
 
   modular_server::Function & get_assay_status_function = modular_server_.createFunction(constants::get_assay_status_function_name);
-  get_assay_status_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&PelletDispenser::getAssayStatusHandler));
+  get_assay_status_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&MouseReachLinearController::getAssayStatusHandler));
   get_assay_status_function.setResultTypeObject();
 
   modular_server::Function & play_position_tone_function = modular_server_.createFunction(constants::play_position_tone_function_name);
-  play_position_tone_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&PelletDispenser::playPositionToneHandler));
+  play_position_tone_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&MouseReachLinearController::playPositionToneHandler));
 
   modular_server::Function & buzz_function = modular_server_.createFunction(constants::buzz_function_name);
-  buzz_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&PelletDispenser::buzzHandler));
+  buzz_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&MouseReachLinearController::buzzHandler));
 
   // Callbacks
   modular_server::Callback & start_assay_callback = modular_server_.createCallback(constants::start_assay_callback_name);
-  start_assay_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&PelletDispenser::startAssayHandler));
+  start_assay_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::startAssayHandler));
   start_assay_callback.attachTo(modular_device_base::constants::bnc_a_pin_name,modular_server::constants::pin_mode_interrupt_falling);
 #if !defined(__AVR_ATmega2560__)
   start_assay_callback.attachTo(modular_device_base::constants::btn_a_pin_name,modular_server::constants::pin_mode_interrupt_falling);
 #endif
 
   modular_server::Callback & dispense_callback = modular_server_.createCallback(constants::dispense_callback_name);
-  dispense_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&PelletDispenser::dispenseHandler));
+  dispense_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::dispenseHandler));
   dispense_callback.attachTo(modular_device_base::constants::bnc_b_pin_name,modular_server::constants::pin_mode_interrupt_falling);
 #if defined(__MK64FX512__)
   dispense_callback.attachTo(modular_device_base::constants::btn_b_pin_name,modular_server::constants::pin_mode_interrupt_falling);
 #endif
 
   modular_server::Callback & abort_callback = modular_server_.createCallback(constants::abort_callback_name);
-  abort_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&PelletDispenser::abortHandler));
+  abort_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::abortHandler));
 
 }
 
-void PelletDispenser::update()
+void MouseReachLinearController::update()
 {
   // Parent Update
   StageController::update();
@@ -325,12 +325,12 @@ void PelletDispenser::update()
   }
 }
 
-constants::AssayStatus PelletDispenser::getAssayStatus()
+constants::AssayStatus MouseReachLinearController::getAssayStatus()
 {
   return assay_status_;
 }
 
-StageController::PositionArray PelletDispenser::getBuzzPosition()
+StageController::PositionArray MouseReachLinearController::getBuzzPosition()
 {
   StageController::PositionArray buzz_position;
   modular_server_.property(constants::buzz_position_property_name).getValue(buzz_position);
@@ -338,7 +338,7 @@ StageController::PositionArray PelletDispenser::getBuzzPosition()
   return buzz_position;
 }
 
-StageController::PositionArray PelletDispenser::getLoadPosition()
+StageController::PositionArray MouseReachLinearController::getLoadPosition()
 {
   StageController::PositionArray load_position;
   modular_server_.property(constants::load_position_property_name).getValue(load_position);
@@ -346,7 +346,7 @@ StageController::PositionArray PelletDispenser::getLoadPosition()
   return load_position;
 }
 
-StageController::PositionArray PelletDispenser::getNextDeliverPosition()
+StageController::PositionArray MouseReachLinearController::getNextDeliverPosition()
 {
   StageController::PositionArray next_deliver_position;
   modular_server_.property(constants::next_deliver_position_property_name).getValue(next_deliver_position);
@@ -354,7 +354,7 @@ StageController::PositionArray PelletDispenser::getNextDeliverPosition()
   return next_deliver_position;
 }
 
-StageController::PositionArray PelletDispenser::getNextDispensePosition()
+StageController::PositionArray MouseReachLinearController::getNextDispensePosition()
 {
   StageController::PositionArray next_dispense_position;
   modular_server_.property(constants::next_dispense_position_property_name).getValue(next_dispense_position);
@@ -362,7 +362,7 @@ StageController::PositionArray PelletDispenser::getNextDispensePosition()
   return next_dispense_position;
 }
 
-long PelletDispenser::getPositionToneFrequency()
+long MouseReachLinearController::getPositionToneFrequency()
 {
   long position_tone_frequency;
   modular_server_.property(constants::position_tone_frequency_property_name).getValue(position_tone_frequency);
@@ -370,7 +370,7 @@ long PelletDispenser::getPositionToneFrequency()
   return position_tone_frequency;
 }
 
-long PelletDispenser::getPositionToneVolume()
+long MouseReachLinearController::getPositionToneVolume()
 {
   long position_tone_volume;
   modular_server_.property(constants::position_tone_volume_property_name).getValue(position_tone_volume);
@@ -378,7 +378,7 @@ long PelletDispenser::getPositionToneVolume()
   return position_tone_volume;
 }
 
-long PelletDispenser::getPositionToneDelay()
+long MouseReachLinearController::getPositionToneDelay()
 {
   double position_tone_delay;
   modular_server_.property(constants::position_tone_delay_property_name).getValue(position_tone_delay);
@@ -386,7 +386,7 @@ long PelletDispenser::getPositionToneDelay()
   return position_tone_delay * constants::milliseconds_per_second;
 }
 
-long PelletDispenser::getPositionToneDuration()
+long MouseReachLinearController::getPositionToneDuration()
 {
   double position_tone_duration;
   modular_server_.property(constants::position_tone_duration_property_name).getValue(position_tone_duration);
@@ -394,7 +394,7 @@ long PelletDispenser::getPositionToneDuration()
   return position_tone_duration * constants::milliseconds_per_second;
 }
 
-long PelletDispenser::getDispenseDelay()
+long MouseReachLinearController::getDispenseDelay()
 {
   double dispense_delay;
   modular_server_.property(constants::dispense_delay_property_name).getValue(dispense_delay);
@@ -403,7 +403,7 @@ long PelletDispenser::getDispenseDelay()
   return dispense_delay_ms;
 }
 
-long PelletDispenser::getReturnDelay()
+long MouseReachLinearController::getReturnDelay()
 {
   double return_delay_min;
   modular_server_.property(constants::return_delay_min_property_name).getValue(return_delay_min);
@@ -417,7 +417,7 @@ long PelletDispenser::getReturnDelay()
   return return_delay_ms;
 }
 
-long PelletDispenser::getBuzzPower()
+long MouseReachLinearController::getBuzzPower()
 {
   long buzz_power;
   modular_server_.property(constants::buzz_power_property_name).getValue(buzz_power);
@@ -425,7 +425,7 @@ long PelletDispenser::getBuzzPower()
   return buzz_power;
 }
 
-long PelletDispenser::getBuzzPeriod()
+long MouseReachLinearController::getBuzzPeriod()
 {
   long buzz_period;
   modular_server_.property(constants::buzz_period_property_name).getValue(buzz_period);
@@ -433,7 +433,7 @@ long PelletDispenser::getBuzzPeriod()
   return buzz_period;
 }
 
-long PelletDispenser::getBuzzOnDuration()
+long MouseReachLinearController::getBuzzOnDuration()
 {
   long buzz_on_duration;
   modular_server_.property(constants::buzz_on_duration_property_name).getValue(buzz_on_duration);
@@ -441,7 +441,7 @@ long PelletDispenser::getBuzzOnDuration()
   return buzz_on_duration;
 }
 
-long PelletDispenser::getBuzzCount()
+long MouseReachLinearController::getBuzzCount()
 {
   long buzz_count;
   modular_server_.property(constants::buzz_count_property_name).getValue(buzz_count);
@@ -449,7 +449,7 @@ long PelletDispenser::getBuzzCount()
   return buzz_count;
 }
 
-long PelletDispenser::getWaitAtLoadDuration()
+long MouseReachLinearController::getWaitAtLoadDuration()
 {
   long wait_at_load_duration;
   modular_server_.property(constants::wait_at_load_duration_property_name).getValue(wait_at_load_duration);
@@ -457,7 +457,7 @@ long PelletDispenser::getWaitAtLoadDuration()
   return wait_at_load_duration;
 }
 
-long PelletDispenser::getTapPeriod()
+long MouseReachLinearController::getTapPeriod()
 {
   long tap_period;
   modular_server_.property(constants::tap_period_property_name).getValue(tap_period);
@@ -465,7 +465,7 @@ long PelletDispenser::getTapPeriod()
   return tap_period;
 }
 
-long PelletDispenser::getTapOnDuration()
+long MouseReachLinearController::getTapOnDuration()
 {
   long tap_on_duration;
   modular_server_.property(constants::tap_on_duration_property_name).getValue(tap_on_duration);
@@ -473,7 +473,7 @@ long PelletDispenser::getTapOnDuration()
   return tap_on_duration;
 }
 
-long PelletDispenser::getTapCount()
+long MouseReachLinearController::getTapCount()
 {
   long tap_count;
   modular_server_.property(constants::tap_count_property_name).getValue(tap_count);
@@ -481,34 +481,34 @@ long PelletDispenser::getTapCount()
   return tap_count;
 }
 
-void PelletDispenser::moveStageToBuzzPosition()
+void MouseReachLinearController::moveStageToBuzzPosition()
 {
   StageController::PositionArray buzz_position = getBuzzPosition();
   moveStageTo(buzz_position);
 }
 
-void PelletDispenser::moveStageToLoadPosition()
+void MouseReachLinearController::moveStageToLoadPosition()
 {
   StageController::PositionArray load_position = getLoadPosition();
   moveStageSoftlyTo(load_position);
 }
 
-void PelletDispenser::waitAtLoad()
+void MouseReachLinearController::waitAtLoad()
 {
   long wait_at_load_duration = getWaitAtLoadDuration();
-  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&PelletDispenser::setMoveToNextDeliverPositionHandler),
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setMoveToNextDeliverPositionHandler),
     wait_at_load_duration);
   event_controller_.enable(event_id);
 }
 
-void PelletDispenser::moveStageToNextDeliverPosition()
+void MouseReachLinearController::moveStageToNextDeliverPosition()
 {
   StageController::PositionArray next_deliver_position = getNextDeliverPosition();
   deliver_position_ = next_deliver_position;
   moveStageSoftlyTo(next_deliver_position);
 }
 
-void PelletDispenser::setDispenseVelocityLimit(size_t channel)
+void MouseReachLinearController::setDispenseVelocityLimit(size_t channel)
 {
   long velocity_min;
   modular_server_.property(step_dir_controller::constants::velocity_min_property_name).getElementValue(channel,velocity_min);
@@ -522,7 +522,7 @@ void PelletDispenser::setDispenseVelocityLimit(size_t channel)
   temporarilySetLimits(channel,velocity_min,dispense_velocity,acceleration_max);
 }
 
-void PelletDispenser::setDispenseVelocityLimits()
+void MouseReachLinearController::setDispenseVelocityLimits()
 {
   for (size_t channel=0; channel<getChannelCount(); ++channel)
   {
@@ -530,7 +530,7 @@ void PelletDispenser::setDispenseVelocityLimits()
   }
 }
 
-void PelletDispenser::restoreVelocityLimits()
+void MouseReachLinearController::restoreVelocityLimits()
 {
   for (size_t channel=0; channel<getChannelCount(); ++channel)
   {
@@ -538,13 +538,13 @@ void PelletDispenser::restoreVelocityLimits()
   }
 }
 
-void PelletDispenser::moveStageToNextDispensePosition()
+void MouseReachLinearController::moveStageToNextDispensePosition()
 {
   StageController::PositionArray next_dispense_position = getNextDispensePosition();
   moveStageTo(next_dispense_position);
 }
 
-void PelletDispenser::playPositionTone()
+void MouseReachLinearController::playPositionTone()
 {
   const ConstantString * position_ptr;
   modular_server_.property(constants::position_property_name).getValue(position_ptr);
@@ -576,53 +576,53 @@ void PelletDispenser::playPositionTone()
     1);
 }
 
-void PelletDispenser::setWaitToDispenseState()
+void MouseReachLinearController::setWaitToDispenseState()
 {
   assay_status_.state_ptr = &constants::state_wait_to_dispense_string;
 }
 
-void PelletDispenser::waitToDispense()
+void MouseReachLinearController::waitToDispense()
 {
   long dispense_delay = getDispenseDelay();
-  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&PelletDispenser::moveToDispenseHandler),
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::moveToDispenseHandler),
     dispense_delay);
   event_controller_.enable(event_id);
 }
 
-void PelletDispenser::setMoveToDispenseState()
+void MouseReachLinearController::setMoveToDispenseState()
 {
   assay_status_.state_ptr = &constants::state_move_to_dispense_string;
 }
 
-void PelletDispenser::waitToReturn()
+void MouseReachLinearController::waitToReturn()
 {
   long return_delay = getReturnDelay();
-  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&PelletDispenser::moveToBuzzHandler),
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::moveToBuzzHandler),
     return_delay);
   event_controller_.enable(event_id);
 }
 
-void PelletDispenser::setMoveToBuzzState()
+void MouseReachLinearController::setMoveToBuzzState()
 {
   assay_status_.state_ptr = &constants::state_move_to_buzz_string;
 }
 
-void PelletDispenser::setMoveToLoadState()
+void MouseReachLinearController::setMoveToLoadState()
 {
   assay_status_.state_ptr = &constants::state_move_to_load_string;
 }
 
-void PelletDispenser::setWaitAtLoadState()
+void MouseReachLinearController::setWaitAtLoadState()
 {
   assay_status_.state_ptr = &constants::state_wait_at_load_string;
 }
 
-void PelletDispenser::setMoveToNextDeliverPositionState()
+void MouseReachLinearController::setMoveToNextDeliverPositionState()
 {
   assay_status_.state_ptr = &constants::state_move_to_next_deliver_string;
 }
 
-void PelletDispenser::buzz()
+void MouseReachLinearController::buzz()
 {
   long buzz_power = getBuzzPower();
   long buzz_period = getBuzzPeriod();
@@ -641,12 +641,12 @@ void PelletDispenser::buzz()
     buzz_period,
     buzz_on_duration,
     buzz_count);
-  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&PelletDispenser::setMoveToLoadHandler),
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setMoveToLoadHandler),
     buzz_period*buzz_count);
   event_controller_.enable(event_id);
 }
 
-void PelletDispenser::tap()
+void MouseReachLinearController::tap()
 {
   long tap_power = getBuzzPower();
   long tap_period = getTapPeriod();
@@ -665,12 +665,12 @@ void PelletDispenser::tap()
     tap_period,
     tap_on_duration,
     tap_count);
-  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&PelletDispenser::setWaitAtLoadHandler),
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setWaitAtLoadHandler),
     tap_period*tap_count);
   event_controller_.enable(event_id);
 }
 
-void PelletDispenser::startAssay()
+void MouseReachLinearController::startAssay()
 {
   stopAll();
   event_controller_.removeAllEvents();
@@ -679,7 +679,7 @@ void PelletDispenser::startAssay()
   assay_status_.state_ptr = &constants::state_assay_started_string;
 }
 
-void PelletDispenser::dispense()
+void MouseReachLinearController::dispense()
 {
   if (assay_status_.state_ptr == &constants::state_ready_to_dispense_string)
   {
@@ -688,7 +688,7 @@ void PelletDispenser::dispense()
   }
 }
 
-void PelletDispenser::abort()
+void MouseReachLinearController::abort()
 {
   stopAll();
   event_controller_.removeAllEvents();
@@ -704,7 +704,7 @@ void PelletDispenser::abort()
   }
 }
 
-void PelletDispenser::setClientPropertyValuesHandler()
+void MouseReachLinearController::setClientPropertyValuesHandler()
 {
   modular_server_.response().writeResultKey();
 
@@ -723,7 +723,7 @@ void PelletDispenser::setClientPropertyValuesHandler()
   modular_server_.response().endObject();
 }
 
-void PelletDispenser::setDispenseVelocityLimitHandler(size_t channel)
+void MouseReachLinearController::setDispenseVelocityLimitHandler(size_t channel)
 {
   if (assay_status_.state_ptr == &constants::state_ready_to_dispense_string)
   {
@@ -731,7 +731,7 @@ void PelletDispenser::setDispenseVelocityLimitHandler(size_t channel)
   }
 }
 
-void PelletDispenser::getAssayStatusHandler()
+void MouseReachLinearController::getAssayStatusHandler()
 {
   constants::AssayStatus assay_status = getAssayStatus();
 
@@ -745,12 +745,12 @@ void PelletDispenser::getAssayStatusHandler()
 
 }
 
-void PelletDispenser::playPositionToneHandler()
+void MouseReachLinearController::playPositionToneHandler()
 {
   playPositionTone();
 }
 
-void PelletDispenser::buzzHandler()
+void MouseReachLinearController::buzzHandler()
 {
   if ((assay_status_.state_ptr == &constants::state_assay_not_started_string) ||
     (assay_status_.state_ptr == &constants::state_assay_finished_string))
@@ -759,17 +759,17 @@ void PelletDispenser::buzzHandler()
   }
 }
 
-void PelletDispenser::moveToDispenseHandler(int arg)
+void MouseReachLinearController::moveToDispenseHandler(int arg)
 {
   setMoveToDispenseState();
 }
 
-void PelletDispenser::moveToBuzzHandler(int arg)
+void MouseReachLinearController::moveToBuzzHandler(int arg)
 {
   setMoveToBuzzState();
 }
 
-void PelletDispenser::setMoveToLoadHandler(int arg)
+void MouseReachLinearController::setMoveToLoadHandler(int arg)
 {
   if (assay_status_.state_ptr == &constants::state_buzzing_string)
   {
@@ -777,7 +777,7 @@ void PelletDispenser::setMoveToLoadHandler(int arg)
   }
 }
 
-void PelletDispenser::setWaitAtLoadHandler(int arg)
+void MouseReachLinearController::setWaitAtLoadHandler(int arg)
 {
   if (assay_status_.state_ptr == &constants::state_tapping_string)
   {
@@ -785,7 +785,7 @@ void PelletDispenser::setWaitAtLoadHandler(int arg)
   }
 }
 
-void PelletDispenser::setMoveToNextDeliverPositionHandler(int arg)
+void MouseReachLinearController::setMoveToNextDeliverPositionHandler(int arg)
 {
   if (assay_status_.state_ptr == &constants::state_waiting_at_load_string)
   {
@@ -793,17 +793,17 @@ void PelletDispenser::setMoveToNextDeliverPositionHandler(int arg)
   }
 }
 
-void PelletDispenser::startAssayHandler(modular_server::Pin * pin_ptr)
+void MouseReachLinearController::startAssayHandler(modular_server::Pin * pin_ptr)
 {
   startAssay();
 }
 
-void PelletDispenser::dispenseHandler(modular_server::Pin * pin_ptr)
+void MouseReachLinearController::dispenseHandler(modular_server::Pin * pin_ptr)
 {
   dispense();
 }
 
-void PelletDispenser::abortHandler(modular_server::Pin * pin_ptr)
+void MouseReachLinearController::abortHandler(modular_server::Pin * pin_ptr)
 {
   abort();
 }

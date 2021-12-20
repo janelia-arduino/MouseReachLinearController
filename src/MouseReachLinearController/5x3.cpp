@@ -10,7 +10,7 @@
 
 #if defined(__MK64FX512__)
 
-namespace pellet_dispenser
+namespace mouse_reach_linear_controller
 {
 namespace constants
 {

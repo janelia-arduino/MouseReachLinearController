@@ -5,14 +5,14 @@
 // Authors:
 // Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
-#ifndef PELLET_DISPENSER_5X3_CONSTANTS_H
-#define PELLET_DISPENSER_5X3_CONSTANTS_H
+#ifndef MOUSE_REACH_LINEAR_CONTROLLER_5X3_CONSTANTS_H
+#define MOUSE_REACH_LINEAR_CONTROLLER_5X3_CONSTANTS_H
 #include "Constants.h"
 
 
 #if defined(__MK64FX512__)
 
-namespace pellet_dispenser
+namespace mouse_reach_linear_controller
 {
 namespace constants
 {

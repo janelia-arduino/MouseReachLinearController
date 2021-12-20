@@ -8,13 +8,13 @@
 #include "Constants.h"
 
 
-namespace pellet_dispenser
+namespace mouse_reach_linear_controller
 {
 namespace constants
 {
-CONSTANT_STRING(device_name,"pellet_dispenser");
+CONSTANT_STRING(device_name,"mouse_reach_linear_controller");
 
-CONSTANT_STRING(firmware_name,"PelletDispenser");
+CONSTANT_STRING(firmware_name,"MouseReachLinearController");
 // Use semantic versioning http://semver.org/
 const modular_server::FirmwareInfo firmware_info =
 {

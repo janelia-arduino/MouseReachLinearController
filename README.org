@@ -1,101 +1,76 @@
-#+TITLE: PelletDispenser
+#+TITLE: MouseReachLinearController
 #+AUTHOR: Peter Polidoro
 #+EMAIL: peter@polidoro.io
 
 * Library Information
-  - Name :: PelletDispenser
-  - Version :: 11.1.0
-  - License :: BSD
-  - URL :: https://github.com/janelia-arduino/PelletDispenser
-  - Author :: Peter Polidoro
-  - Email :: peter@polidoro.io
+- Name :: MouseReachLinearController
+- Version :: 0.1.1
+- License :: BSD
+- URL :: https://github.com/janelia-arduino/MouseReachLinearController
+- Author :: Peter Polidoro
+- Email :: peter@polidoro.io
 
 ** Description
 
-   Modular device pellet dispenser library.
+Modular device lickport array controller library.
+
+* Webpage Documentation
+
+[[https://janelia-arduino.github.io/MouseReachLinearController/]]
 
 * API NAMES
 
-  #+BEGIN_SRC js
+#+BEGIN_SRC js
+
+{
+  "ancestors": [
+    "ModularServer",
+    "ModularDeviceBase",
+    "DigitalController"
+  ],
+  "firmware": [
     {
-      "id": "getApi",
-      "result": {
-        "firmware": [
-          "PelletDispenser"
-        ],
-        "verbosity": "NAMES",
-        "functions": [
-          "setClientPropertyValues",
-          "getAssayStatus",
-          "playPositionTone",
-          "buzz"
-        ],
-        "properties": [
-          "buzzPosition",
-          "loadPosition",
-          "nextDeliverPosition",
-          "nextDispensePosition",
-          "position",
-          "positionToneFrequency",
-          "positionToneVolume",
-          "positionToneDelay",
-          "positionToneDuration",
-          "dispenseDelay",
-          "returnDelayMin",
-          "returnDelayMax",
-          "buzzPower",
-          "buzzPeriod",
-          "buzzOnDuration",
-          "buzzCount",
-          "waitAtLoadDuration",
-          "tapPeriod",
-          "tapOnDuration",
-          "tapCount",
-          "dispenseVelocity"
-        ],
-        "callbacks": [
-          "startAssay",
-          "dispense",
-          "abort"
-        ]
-      }
+      "name": "MouseReachLinearController",
+      "version": "0.1.1"
     }
-  #+END_SRC
+  ],
+  "verbosity": "NAMES",
+  "functions": [
+    "dispenseLickportForDuration",
+    "dispenseLickportsForDuration",
+    "dispenseAllLickportsForDuration",
+    "dispenseLickportsForDurations",
+    "getActivatedLickports",
+    "activateOnlyLickport",
+    "activateOnlyLickports",
+    "activateLickport",
+    "activateLickports",
+    "deactivateLickport",
+    "deactivateLickports",
+    "getAndClearLickData"
+  ],
+  "parameters": [
+    "lickport",
+    "lickports",
+    "dispense_duration",
+    "dispense_durations"
+  ],
+  "properties": [
+    "syncOnDuration",
+    "syncPeriodMin",
+    "syncPeriodMax",
+    "dispenseDelays",
+    "dispensePeriods",
+    "dispenseCounts",
+    "activatedDispenseDurations"
+  ],
+  "callbacks": [
+    "calibrateLickSensor",
+    "manageLickStatusChange",
+    "activateAllLickports",
+    "deactivateAllLickports"
+  ]
+}
 
-* API GENERAL
+#+END_SRC
 
-  [[./api/]]
-
-* Ancestors
-
-  [[https://github.com/janelia-arduino/ModularServer]]
-
-  [[https://github.com/janelia-arduino/ModularDeviceBase]]
-
-  [[https://github.com/janelia-arduino/StepDirController]]
-
-  [[https://github.com/janelia-arduino/StepperController]]
-
-  [[https://github.com/janelia-arduino/StageController]]
-
-* Clients
-
-  [[https://github.com/janelia-arduino/AudioController]]
-
-  [[https://github.com/janelia-arduino/PowerSwitchController]]
-
-* Devices
-
-  [[https://github.com/janelia-modular-devices/modular_device_base]]
-
-  [[https://github.com/janelia-modular-devices/stepper_controller]]
-
-  [[https://github.com/janelia-modular-devices/audio_controller]]
-
-* More Detailed Modular Device Information
-
-  [[https://github.com/janelia-modular-devices/modular-devices]]
-
-* Installation Instructions
-
-  [[https://github.com/janelia-arduino/arduino-libraries]]
