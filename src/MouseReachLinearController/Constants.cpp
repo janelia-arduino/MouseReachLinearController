@@ -19,10 +19,12 @@ CONSTANT_STRING(firmware_name,"MouseReachLinearController");
 const modular_server::FirmwareInfo firmware_info =
 {
   .name_ptr=&firmware_name,
-  .version_major=11,
-  .version_minor=1,
+  .version_major=1,
+  .version_minor=0,
   .version_patch=0,
 };
+
+CONSTANT_STRING(hardware_name,"mouse_reach_controller");
 
 CONSTANT_STRING(state_string,"state");
 CONSTANT_STRING(state_assay_not_started_string,"ASSAY_NOT_STARTED");
@@ -55,25 +57,16 @@ const long milliseconds_per_minute = milliseconds_per_second*seconds_per_minute;
 
 CONSTANT_STRING(set_value_string,"setValue");
 
-// Clients
-const size_t audio_controller_address[1] =
-{
-  3,
-};
-
-const size_t power_switch_controller_address[2] =
-{
-  3,
-  3,
-};
-
-const size_t buzz_channels[BUZZ_CHANNEL_COUNT] =
-{
-  0,
-};
-const size_t buzz_channel_group = 1;
-
 // Pins
+CONSTANT_STRING(signal_a_pin_name,"signal_a");
+
+CONSTANT_STRING(signal_b_pin_name,"signal_b");
+
+CONSTANT_STRING(signal_c_pin_name,"signal_c");
+
+CONSTANT_STRING(signal_d_pin_name,"signal_d");
+
+CONSTANT_STRING(power_switch_pin_name,"power_switch");
 
 // Units
 CONSTANT_STRING(mm_units,"mm");
@@ -145,11 +138,6 @@ const double return_delay_min_default = 4.0;
 
 CONSTANT_STRING(return_delay_max_property_name,"returnDelayMax");
 const double return_delay_max_default = 4.0;
-
-CONSTANT_STRING(buzz_power_property_name,"buzzPower");
-const long buzz_power_min = 1;
-const long buzz_power_max = 25;
-const long buzz_power_default = 21;
 
 CONSTANT_STRING(buzz_period_property_name,"buzzPeriod");
 const long buzz_period_min = 10;

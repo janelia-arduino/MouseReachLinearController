@@ -16,9 +16,7 @@
 
 #include <EventController.h>
 
-#include <ModularClient.h>
-#include <AudioController.h>
-#include <PowerSwitchController.h>
+#include <AudioApparatus.h>
 
 #include <ModularServer.h>
 #include <ModularDeviceBase.h>
@@ -32,7 +30,6 @@
 class MouseReachLinearController : public StageController
 {
 public:
-  MouseReachLinearController();
   virtual void setup();
   virtual void update();
 
@@ -47,7 +44,6 @@ public:
   long getPositionToneDuration();
   long getDispenseDelay();
   long getReturnDelay();
-  long getBuzzPower();
   long getBuzzPeriod();
   long getBuzzOnDuration();
   long getBuzzCount();
@@ -81,6 +77,8 @@ public:
   void abort();
 
 private:
+  modular_server::Pin pins_[mouse_reach_linear_controller::constants::PIN_COUNT_MAX];
+
   modular_server::Property properties_[mouse_reach_linear_controller::constants::PROPERTY_COUNT_MAX];
   modular_server::Parameter parameters_[mouse_reach_linear_controller::constants::PARAMETER_COUNT_MAX];
   modular_server::Function functions_[mouse_reach_linear_controller::constants::FUNCTION_COUNT_MAX];
@@ -89,8 +87,7 @@ private:
   mouse_reach_linear_controller::constants::AssayStatus assay_status_;
   EventController<mouse_reach_linear_controller::constants::EVENT_COUNT_MAX> event_controller_;
 
-  ModularClient * audio_controller_ptr_;
-  ModularClient * power_switch_controller_ptr_;
+  AudioApparatus<mouse_reach_linear_controller::constants::EVENT_COUNT_MAX> audio_apparatus_;
 
   StageController::PositionArray deliver_position_;
 

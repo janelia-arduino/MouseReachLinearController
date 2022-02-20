@@ -12,16 +12,13 @@
 #include <StepperController.h>
 #include <StageController.h>
 
-#include <AudioController.h>
-#include <PowerSwitchController.h>
-
 
 namespace mouse_reach_linear_controller
 {
 namespace constants
 {
 //MAX values must be >= 1, >= created/copied count, < RAM limit
-enum{PROPERTY_COUNT_MAX=21};
+enum{PROPERTY_COUNT_MAX=20};
 enum{PARAMETER_COUNT_MAX=1};
 enum{FUNCTION_COUNT_MAX=4};
 enum{CALLBACK_COUNT_MAX=3};
@@ -32,6 +29,9 @@ extern ConstantString device_name;
 
 extern ConstantString firmware_name;
 extern const modular_server::FirmwareInfo firmware_info;
+
+extern ConstantString hardware_name;
+extern const modular_server::HardwareInfo hardware_info;
 
 struct AssayStatus
 {
@@ -69,16 +69,23 @@ extern const long milliseconds_per_minute;
 
 extern ConstantString set_value_string;
 
-// Clients
-extern const size_t audio_controller_address[1];
-
-extern const size_t power_switch_controller_address[2];
-
-enum{BUZZ_CHANNEL_COUNT=1};
-extern const size_t buzz_channels[BUZZ_CHANNEL_COUNT];
-extern const size_t buzz_channel_group;
-
 // Pins
+enum{PIN_COUNT_MAX=4};
+
+extern ConstantString signal_a_pin_name;
+extern const size_t signal_a_pin_number;
+
+extern ConstantString signal_b_pin_name;
+extern const size_t signal_b_pin_number;
+
+extern ConstantString signal_c_pin_name;
+extern const size_t signal_c_pin_number;
+
+extern ConstantString signal_d_pin_name;
+extern const size_t signal_d_pin_number;
+
+extern ConstantString power_switch_pin_name;
+extern const size_t power_switch_pin_number;
 
 // Units
 extern ConstantString mm_units;
@@ -173,11 +180,6 @@ extern const double return_delay_min_default;
 extern ConstantString return_delay_max_property_name;
 extern const double return_delay_max_default;
 
-extern ConstantString buzz_power_property_name;
-extern const long buzz_power_min;
-extern const long buzz_power_max;
-extern const long buzz_power_default;
-
 extern ConstantString buzz_period_property_name;
 extern const long buzz_period_min;
 extern const long buzz_period_max;
@@ -234,6 +236,5 @@ extern ConstantString abort_callback_name;
 // Errors
 }
 }
-#include "5x3.h"
-#include "3x2.h"
+#include "TEENSY40.h"
 #endif

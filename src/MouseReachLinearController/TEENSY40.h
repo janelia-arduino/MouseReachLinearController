@@ -1,21 +1,21 @@
 // ----------------------------------------------------------------------------
-// 3x2.h
+// TEENSY40.h
 //
 //
 // Authors:
 // Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
-#ifndef MOUSE_REACH_LINEAR_CONTROLLER_3X2_CONSTANTS_H
-#define MOUSE_REACH_LINEAR_CONTROLLER_3X2_CONSTANTS_H
+#ifndef MOUSE_REACH_LINEAR_CONTROLLER_TEENSY40_CONSTANTS_H
+#define MOUSE_REACH_LINEAR_CONTROLLER_TEENSY40_CONSTANTS_H
 #include "Constants.h"
 
 
-#if defined(__MK20DX256__)
-
+#if defined(__IMXRT1062__) && defined(ARDUINO_TEENSY40)
 namespace mouse_reach_linear_controller
 {
 namespace constants
 {
+//MAX values must be >= 1, >= created/copied count, < RAM limit
 
 // Pins
 
@@ -33,5 +33,6 @@ namespace constants
 // Errors
 }
 }
+
 #endif
 #endif
