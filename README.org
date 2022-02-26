@@ -25,3 +25,14 @@ Mouse reach linear controller firmware
 
 #+END_SRC
 
+* Hardware
+
+** X-Axis and Y-Axis
+
+[[https://www.haydonkerkpittman.com/products/linear-rail-systems/slide-guided-rail-systems/rgs/motorized/rgs04]]
+
+** Z-Axis
+
+[[https://www.haydonkerkpittman.com/products/linear-actuators/can-stack-stepper/25mm-25000]]
+
+

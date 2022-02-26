@@ -76,6 +76,9 @@ public:
   void dispense();
   void abort();
 
+protected:
+  void setupDriver(size_t channel) override;
+
 private:
   modular_server::Pin pins_[mouse_reach_linear_controller::constants::PIN_COUNT_MAX];
 

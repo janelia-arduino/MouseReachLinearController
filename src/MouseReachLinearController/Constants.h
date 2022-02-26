@@ -70,7 +70,7 @@ extern const long milliseconds_per_minute;
 extern ConstantString set_value_string;
 
 // Pins
-enum{PIN_COUNT_MAX=4};
+enum{PIN_COUNT_MAX=5};
 
 extern ConstantString signal_a_pin_name;
 extern const size_t signal_a_pin_number;

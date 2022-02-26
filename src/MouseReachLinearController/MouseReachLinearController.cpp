@@ -53,7 +53,7 @@ void MouseReachLinearController::setup()
 
   modular_server::Pin & power_switch_pin = modular_server_.createPin(constants::power_switch_pin_name,
     constants::power_switch_pin_number);
-  power_switch_pin.setModeDigitalOutput();
+  power_switch_pin.setModePwmRising();
 
   // Add Firmware
   modular_server_.addFirmware(constants::firmware_info,
@@ -626,54 +626,22 @@ void MouseReachLinearController::setMoveToNextDeliverPositionState()
 
 void MouseReachLinearController::buzz()
 {
+  long buzz_period = getBuzzPeriod();
+  long buzz_on_duration = getBuzzOnDuration();
+  long buzz_count = getBuzzCount();
+
   modular_server::Pin & power_switch_pin = modular_server_.pin(constants::power_switch_pin_name);
-  power_switch_pin.setValue(1);
-  delay(1000);
-  power_switch_pin.setValue(0);
-  // long buzz_power = getBuzzPower();
-  // long buzz_period = getBuzzPeriod();
-  // long buzz_on_duration = getBuzzOnDuration();
-  // long buzz_count = getBuzzCount();
-
-  // power_switch_controller_ptr_->call(power_switch_controller::constants::set_power_function_name,
-  //   constants::buzz_channel_group,
-  //   buzz_power);
-
-  // Array<size_t,constants::BUZZ_CHANNEL_COUNT> buzz_channels_array(constants::buzz_channels);
-
-  // power_switch_controller_ptr_->call(power_switch_controller::constants::add_pwm_function_name,
-  //   buzz_channels_array,
-  //   buzz_on_duration,
-  //   buzz_period,
-  //   buzz_on_duration,
-  //   buzz_count);
-  // EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setMoveToLoadHandler),
-  //   buzz_period*buzz_count);
-  // event_controller_.enable(event_id);
+  power_switch_pin.addPwm(buzz_period,buzz_on_duration,buzz_count);
 }
 
 void MouseReachLinearController::tap()
 {
-  // long tap_power = getBuzzPower();
-  // long tap_period = getTapPeriod();
-  // long tap_on_duration = getTapOnDuration();
-  // long tap_count = getTapCount();
+  long tap_period = getTapPeriod();
+  long tap_on_duration = getTapOnDuration();
+  long tap_count = getTapCount();
 
-  // power_switch_controller_ptr_->call(power_switch_controller::constants::set_power_function_name,
-  //   constants::buzz_channel_group,
-  //   tap_power);
-
-  // Array<size_t,constants::BUZZ_CHANNEL_COUNT> buzz_channels_array(constants::buzz_channels);
-
-  // power_switch_controller_ptr_->call(power_switch_controller::constants::add_pwm_function_name,
-  //   buzz_channels_array,
-  //   tap_on_duration,
-  //   tap_period,
-  //   tap_on_duration,
-  //   tap_count);
-  // EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setWaitAtLoadHandler),
-  //   tap_period*tap_count);
-  // event_controller_.enable(event_id);
+  modular_server::Pin & power_switch_pin = modular_server_.pin(constants::power_switch_pin_name);
+  power_switch_pin.addPwm(tap_period,tap_on_duration,tap_count);
 }
 
 void MouseReachLinearController::startAssay()
@@ -708,6 +676,13 @@ void MouseReachLinearController::abort()
   {
     assay_status_.state_ptr = &constants::state_assay_not_started_string;
   }
+}
+
+void MouseReachLinearController::setupDriver(size_t channel)
+{
+  Serial.println("MouseReachLinearController::setupDriver");
+  StepperController::setupDriver(channel);
+  enable(channel);
 }
 
 void MouseReachLinearController::setClientPropertyValuesHandler()

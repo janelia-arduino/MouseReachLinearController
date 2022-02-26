@@ -84,13 +84,13 @@ const bool right_switches_enabled_element_default = false;
 
 const bool right_switch_stop_enabled_element_default = false;
 
-const long run_current_0_element_default = 4;
-const long run_current_1_2_element_default = 20;
+const long run_current_0_element_default = 100;
+const long run_current_1_2_element_default = 40;
 
-const long hold_current_0_element_default = 2;
-const long hold_current_1_2_element_default = 10;
+const long hold_current_0_element_default = 0;
+const long hold_current_1_2_element_default = 0;
 
-const long hold_delay_element_default = 50;
+const long hold_delay_element_default = 0;
 
 CONSTANT_STRING(buzz_position_property_name,"buzzPosition");
 

@@ -37,14 +37,14 @@ const size_t power_switch_pin_number = 5;
 // Properties
 const long steps_per_position_units_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  2520, // microsteps/mm = (24steps/rev)*(256microsteps/step)/((0.048in/rev)*(25.4mm/in))
+  2510, // microsteps/mm = (256microsteps/step)/(0.102mm/step)
   8063, // microsteps/mm = (200steps/rev)*(256microsteps/step)/((0.250in/rev)*(25.4mm/in))
   8063, // microsteps/mm = (200steps/rev)*(256microsteps/step)/((0.250in/rev)*(25.4mm/in))
 };
 
 const long velocity_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  7,
+  5,
   20,
   20,
 };
@@ -58,9 +58,9 @@ const long velocity_min_default[stepper_controller::constants::CHANNEL_COUNT_MAX
 
 const long acceleration_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  1200,
-  1200,
-  1200,
+  5,
+  120,
+  120,
 };
 
 const long home_velocity_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
@@ -84,7 +84,7 @@ const bool right_switch_stop_enabled_default[step_dir_controller::constants::CHA
 
 const bool invert_driver_direction_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  true,
+  false,
   false,
   false,
 };
