@@ -128,6 +128,10 @@ extern const long hold_current_1_2_element_default;
 extern const long hold_delay_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
 extern const long hold_delay_element_default;
 
+extern const long pwm_offset_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long pwm_offset_0_element_default;
+extern const long pwm_offset_1_2_element_default;
+
 extern const long stage_position_min_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
 
 extern const long stage_position_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
