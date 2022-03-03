@@ -37,37 +37,37 @@ const size_t power_switch_pin_number = 5;
 // Properties
 const long steps_per_position_units_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  2510, // microsteps/mm = (256microsteps/step)/(0.102mm/step)
-  8063, // microsteps/mm = (200steps/rev)*(256microsteps/step)/((0.250in/rev)*(25.4mm/in))
-  8063, // microsteps/mm = (200steps/rev)*(256microsteps/step)/((0.250in/rev)*(25.4mm/in))
+  steps_per_position_units_0_element_default,
+  steps_per_position_units_1_2_element_default,
+  steps_per_position_units_1_2_element_default,
 };
 
 const long velocity_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  5,
-  20,
-  20,
+  velocity_max_0_element_default,
+  velocity_max_1_2_element_default,
+  velocity_max_1_2_element_default,
 };
 
 const long velocity_min_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  1,
-  2,
-  2,
+  velocity_min_0_element_default,
+  velocity_min_1_2_element_default,
+  velocity_min_1_2_element_default,
 };
 
 const long acceleration_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  5,
-  120,
-  120,
+  acceleration_max_0_element_default,
+  acceleration_max_1_2_element_default,
+  acceleration_max_1_2_element_default,
 };
 
 const long home_velocity_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  -7,
-  -20,
-  -20,
+  home_velocity_0_element_default,
+  home_velocity_1_2_element_default,
+  home_velocity_1_2_element_default,
 };
 
 const bool right_switches_enabled_default[step_dir_controller::constants::CONTROLLER_COUNT_MAX] =
@@ -84,9 +84,9 @@ const bool right_switch_stop_enabled_default[step_dir_controller::constants::CHA
 
 const bool invert_driver_direction_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  false,
-  false,
-  false,
+  invert_driver_direction_0_element_default,
+  invert_driver_direction_1_2_element_default,
+  invert_driver_direction_1_2_element_default,
 };
 
 const long run_current_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
@@ -96,67 +96,74 @@ const long run_current_default[stepper_controller::constants::CHANNEL_COUNT_MAX]
   run_current_1_2_element_default,
 };
 
-const long hold_current_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
+const long pwm_offset_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  hold_current_0_element_default,
-  hold_current_1_2_element_default,
-  hold_current_1_2_element_default,
+  pwm_offset_0_element_default,
+  pwm_offset_1_2_element_default,
+  pwm_offset_1_2_element_default,
 };
 
-const long hold_delay_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
+const long pwm_gradient_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  hold_delay_element_default,
-  hold_delay_element_default,
-  hold_delay_element_default,
+  pwm_gradient_0_element_default,
+  pwm_gradient_1_2_element_default,
+  pwm_gradient_1_2_element_default,
+};
+
+const bool cool_step_enabled_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
+{
+  cool_step_enabled_0_element_default,
+  cool_step_enabled_1_2_element_default,
+  cool_step_enabled_1_2_element_default,
 };
 
 const long stage_position_min_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  0,
-  0,
-  0,
+  stage_position_min_element_default,
+  stage_position_min_element_default,
+  stage_position_min_element_default,
 };
 
 const long stage_position_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  20,
-  80,
-  80,
+  stage_position_max_0_element_default,
+  stage_position_max_1_2_element_default,
+  stage_position_max_1_2_element_default,
 };
 
 const long buzz_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  10,
-  25,
-  65,
+  buzz_position_0_element_default,
+  buzz_position_1_element_default,
+  buzz_position_2_element_default,
 };
 
 const long load_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  1,
-  25,
-  65,
+  load_position_0_element_default,
+  load_position_1_element_default,
+  load_position_2_element_default,
 };
 
 const long next_deliver_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  17,
-  26,
-  64,
+  next_deliver_position_0_element_default,
+  next_deliver_position_1_element_default,
+  next_deliver_position_2_element_default,
 };
 
 const long next_dispense_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  13,
-  21,
-  74,
+  next_dispense_position_0_element_default,
+  next_dispense_position_1_element_default,
+  next_dispense_position_2_element_default,
 };
 
 const long dispense_velocity_default[stepper_controller::constants::CHANNEL_COUNT_MAX] =
 {
-  500,
-  100,
-  100,
+  dispense_velocity_0_element_default,
+  dispense_velocity_1_2_element_default,
+  dispense_velocity_1_2_element_default,
 };
 
 // Parameters

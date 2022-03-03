@@ -90,11 +90,14 @@ void MouseReachLinearController::setup()
   modular_server::Property & run_current_property = modular_server_.property(stepper_controller::constants::run_current_property_name);
   run_current_property.setDefaultValue(constants::run_current_default);
 
-  modular_server::Property & hold_current_property = modular_server_.property(stepper_controller::constants::hold_current_property_name);
-  hold_current_property.setDefaultValue(constants::hold_current_default);
+  modular_server::Property & pwm_offset_property = modular_server_.property(stepper_controller::constants::pwm_offset_property_name);
+  pwm_offset_property.setDefaultValue(constants::pwm_offset_default);
 
-  modular_server::Property & hold_delay_property = modular_server_.property(stepper_controller::constants::hold_delay_property_name);
-  hold_delay_property.setDefaultValue(constants::hold_delay_default);
+  modular_server::Property & pwm_gradient_property = modular_server_.property(stepper_controller::constants::pwm_gradient_property_name);
+  pwm_gradient_property.setDefaultValue(constants::pwm_gradient_default);
+
+  modular_server::Property & cool_step_enabled_property = modular_server_.property(stepper_controller::constants::cool_step_enabled_property_name);
+  cool_step_enabled_property.setDefaultValue(constants::cool_step_enabled_default);
 
   modular_server::Property & stage_position_min_property = modular_server_.property(stage_controller::constants::stage_position_min_property_name);
   stage_position_min_property.setDefaultValue(constants::stage_position_min_default);
@@ -194,16 +197,10 @@ void MouseReachLinearController::setup()
   modular_server::Callback & start_assay_callback = modular_server_.createCallback(constants::start_assay_callback_name);
   start_assay_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::startAssayHandler));
   start_assay_callback.attachTo(modular_device_base::constants::bnc_a_pin_name,modular_server::constants::pin_mode_interrupt_falling);
-#if !defined(__AVR_ATmega2560__)
-  start_assay_callback.attachTo(modular_device_base::constants::btn_a_pin_name,modular_server::constants::pin_mode_interrupt_falling);
-#endif
 
   modular_server::Callback & dispense_callback = modular_server_.createCallback(constants::dispense_callback_name);
   dispense_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::dispenseHandler));
   dispense_callback.attachTo(modular_device_base::constants::bnc_b_pin_name,modular_server::constants::pin_mode_interrupt_falling);
-#if defined(__MK64FX512__)
-  dispense_callback.attachTo(modular_device_base::constants::btn_b_pin_name,modular_server::constants::pin_mode_interrupt_falling);
-#endif
 
   modular_server::Callback & abort_callback = modular_server_.createCallback(constants::abort_callback_name);
   abort_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::abortHandler));
@@ -680,7 +677,6 @@ void MouseReachLinearController::abort()
 
 void MouseReachLinearController::setupDriver(size_t channel)
 {
-  Serial.println("MouseReachLinearController::setupDriver");
   StepperController::setupDriver(channel);
   enable(channel);
 }

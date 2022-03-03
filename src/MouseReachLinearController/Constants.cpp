@@ -80,17 +80,62 @@ const long tone_frequency_min = 200;
 const long tone_frequency_max = 22000;
 
 // Properties
+// microsteps/mm = (256microsteps/step)/(0.102mm/step)
+const long steps_per_position_units_0_element_default = 2510;
+// microsteps/mm = (200steps/rev)*(256microsteps/step)/((0.250in/rev)*(25.4mm/in))
+const long steps_per_position_units_1_2_element_default = 8063;
+
+const long velocity_max_0_element_default = 40;
+const long velocity_max_1_2_element_default = 40;
+
+const long velocity_min_0_element_default = 2;
+const long velocity_min_1_2_element_default = 2;
+
+const long acceleration_max_0_element_default = 40;
+const long acceleration_max_1_2_element_default = 40;
+
+const long home_velocity_0_element_default = -10;
+const long home_velocity_1_2_element_default = -10;
+
 const bool right_switches_enabled_element_default = false;
 
 const bool right_switch_stop_enabled_element_default = false;
 
+const bool invert_driver_direction_0_element_default = false;
+const bool invert_driver_direction_1_2_element_default = false;
+
 const long run_current_0_element_default = 100;
-const long run_current_1_2_element_default = 40;
+const long run_current_1_2_element_default = 100;
 
-const long hold_current_0_element_default = 0;
-const long hold_current_1_2_element_default = 0;
+const long pwm_offset_0_element_default = 150;
+const long pwm_offset_1_2_element_default = 40;
 
-const long hold_delay_element_default = 0;
+const long pwm_gradient_0_element_default = 20;
+const long pwm_gradient_1_2_element_default = 5;
+
+const bool cool_step_enabled_0_element_default = false;
+const bool cool_step_enabled_1_2_element_default = false;
+
+const long stage_position_min_element_default = 0;
+
+const long stage_position_max_0_element_default = 20;
+const long stage_position_max_1_2_element_default = 50;
+
+const long buzz_position_0_element_default = 10;
+const long buzz_position_1_element_default = 25;
+const long buzz_position_2_element_default = 40;
+
+const long load_position_0_element_default = 1;
+const long load_position_1_element_default = 25;
+const long load_position_2_element_default = 40;
+
+const long next_deliver_position_0_element_default = 17;
+const long next_deliver_position_1_element_default = 26;
+const long next_deliver_position_2_element_default = 44;
+
+const long next_dispense_position_0_element_default = 13;
+const long next_dispense_position_1_element_default = 21;
+const long next_dispense_position_2_element_default = 44;
 
 CONSTANT_STRING(buzz_position_property_name,"buzzPosition");
 
@@ -176,7 +221,9 @@ const long tap_count_default = 5;
 
 CONSTANT_STRING(dispense_velocity_property_name,"dispenseVelocity");
 const long dispense_velocity_min = 1;
-const long dispense_velocity_max = 500;
+const long dispense_velocity_max = 100;
+const long dispense_velocity_0_element_default = 80;
+const long dispense_velocity_1_2_element_default = 40;
 
 // Parameters
 

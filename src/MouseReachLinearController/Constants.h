@@ -100,14 +100,24 @@ extern const long tone_frequency_max;
 // Properties
 // Property values must be long, double, bool, long[], double[], bool[], char[], ConstantString *, (ConstantString *)[]
 extern const long steps_per_position_units_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long steps_per_position_units_0_element_default;
+extern const long steps_per_position_units_1_2_element_default;
 
 extern const long velocity_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long velocity_max_0_element_default;
+extern const long velocity_max_1_2_element_default;
 
 extern const long velocity_min_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long velocity_min_0_element_default;
+extern const long velocity_min_1_2_element_default;
 
 extern const long acceleration_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long acceleration_max_0_element_default;
+extern const long acceleration_max_1_2_element_default;
 
 extern const long home_velocity_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long home_velocity_0_element_default;
+extern const long home_velocity_1_2_element_default;
 
 extern const bool right_switches_enabled_default[step_dir_controller::constants::CONTROLLER_COUNT_MAX];
 extern const bool right_switches_enabled_element_default;
@@ -116,37 +126,55 @@ extern const bool right_switch_stop_enabled_default[step_dir_controller::constan
 extern const bool right_switch_stop_enabled_element_default;
 
 extern const bool invert_driver_direction_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const bool invert_driver_direction_0_element_default;
+extern const bool invert_driver_direction_1_2_element_default;
 
 extern const long run_current_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
 extern const long run_current_0_element_default;
 extern const long run_current_1_2_element_default;
 
-extern const long hold_current_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
-extern const long hold_current_0_element_default;
-extern const long hold_current_1_2_element_default;
-
-extern const long hold_delay_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
-extern const long hold_delay_element_default;
-
 extern const long pwm_offset_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
 extern const long pwm_offset_0_element_default;
 extern const long pwm_offset_1_2_element_default;
 
+extern const long pwm_gradient_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long pwm_gradient_0_element_default;
+extern const long pwm_gradient_1_2_element_default;
+
+extern const bool cool_step_enabled_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const bool cool_step_enabled_0_element_default;
+extern const bool cool_step_enabled_1_2_element_default;
+
 extern const long stage_position_min_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long stage_position_min_element_default;
 
 extern const long stage_position_max_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long stage_position_max_0_element_default;
+extern const long stage_position_max_1_2_element_default;
 
 extern ConstantString buzz_position_property_name;
 extern const long buzz_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long buzz_position_0_element_default;
+extern const long buzz_position_1_element_default;
+extern const long buzz_position_2_element_default;
 
 extern ConstantString load_position_property_name;
 extern const long load_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long load_position_0_element_default;
+extern const long load_position_1_element_default;
+extern const long load_position_2_element_default;
 
 extern ConstantString next_deliver_position_property_name;
 extern const long next_deliver_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long next_deliver_position_0_element_default;
+extern const long next_deliver_position_1_element_default;
+extern const long next_deliver_position_2_element_default;
 
 extern ConstantString next_dispense_position_property_name;
 extern const long next_dispense_position_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long next_dispense_position_0_element_default;
+extern const long next_dispense_position_1_element_default;
+extern const long next_dispense_position_2_element_default;
 
 extern ConstantString position_property_name;
 enum{POSITION_SUBSET_LENGTH=2};
@@ -223,6 +251,8 @@ extern ConstantString dispense_velocity_property_name;
 extern const long dispense_velocity_min;
 extern const long dispense_velocity_max;
 extern const long dispense_velocity_default[stepper_controller::constants::CHANNEL_COUNT_MAX];
+extern const long dispense_velocity_0_element_default;
+extern const long dispense_velocity_1_2_element_default;
 
 // Parameters
 
