@@ -95,7 +95,6 @@ private:
   StageController::PositionArray deliver_position_;
 
   // Handlers
-  void setClientPropertyValuesHandler();
   void setDispenseVelocityLimitHandler(size_t channel);
   void getAssayStatusHandler();
   void playPositionToneHandler();
@@ -105,6 +104,10 @@ private:
   void setMoveToLoadHandler(int arg);
   void setWaitAtLoadHandler(int arg);
   void setMoveToNextDeliverPositionHandler(int arg);
+  void setLeftPositionSignalHighHandler(int arg);
+  void setLeftPositionSignalLowHandler(int arg);
+  void setRightPositionSignalHighHandler(int arg);
+  void setRightPositionSignalLowHandler(int arg);
   void startAssayHandler(modular_server::Pin * pin_ptr);
   void dispenseHandler(modular_server::Pin * pin_ptr);
   void abortHandler(modular_server::Pin * pin_ptr);

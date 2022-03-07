@@ -45,11 +45,11 @@ void MouseReachLinearController::setup()
 
   modular_server::Pin & signal_c_pin = modular_server_.createPin(constants::signal_c_pin_name,
     constants::signal_c_pin_number);
-  signal_c_pin.setModeDigitalInputPullup();
+  signal_c_pin.setModeDigitalOutput();
 
   modular_server::Pin & signal_d_pin = modular_server_.createPin(constants::signal_d_pin_name,
     constants::signal_d_pin_number);
-  signal_d_pin.setModeDigitalInputPullup();
+  signal_d_pin.setModeDigitalOutput();
 
   modular_server::Pin & power_switch_pin = modular_server_.createPin(constants::power_switch_pin_name,
     constants::power_switch_pin_number);
@@ -179,10 +179,6 @@ void MouseReachLinearController::setup()
   stage_position_parameter.setUnits(constants::mm_units);
 
   // Functions
-  modular_server::Function & set_client_property_values_function = modular_server_.createFunction(constants::set_client_property_values_function_name);
-  set_client_property_values_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&MouseReachLinearController::setClientPropertyValuesHandler));
-  set_client_property_values_function.setResultTypeObject();
-
   modular_server::Function & get_assay_status_function = modular_server_.createFunction(constants::get_assay_status_function_name);
   get_assay_status_function.attachFunctor(makeFunctor((Functor0 *)0,*this,&MouseReachLinearController::getAssayStatusHandler));
   get_assay_status_function.setResultTypeObject();
@@ -196,11 +192,11 @@ void MouseReachLinearController::setup()
   // Callbacks
   modular_server::Callback & start_assay_callback = modular_server_.createCallback(constants::start_assay_callback_name);
   start_assay_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::startAssayHandler));
-  start_assay_callback.attachTo(modular_device_base::constants::bnc_a_pin_name,modular_server::constants::pin_mode_interrupt_falling);
+  start_assay_callback.attachTo(signal_a_pin,modular_server::constants::pin_mode_interrupt_falling);
 
   modular_server::Callback & dispense_callback = modular_server_.createCallback(constants::dispense_callback_name);
   dispense_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::dispenseHandler));
-  dispense_callback.attachTo(modular_device_base::constants::bnc_b_pin_name,modular_server::constants::pin_mode_interrupt_falling);
+  dispense_callback.attachTo(signal_b_pin,modular_server::constants::pin_mode_interrupt_falling);
 
   modular_server::Callback & abort_callback = modular_server_.createCallback(constants::abort_callback_name);
   abort_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::abortHandler));
@@ -545,34 +541,42 @@ void MouseReachLinearController::moveStageToNextDispensePosition()
 
 void MouseReachLinearController::playPositionTone()
 {
-  // const ConstantString * position_ptr;
-  // modular_server_.property(constants::position_property_name).getValue(position_ptr);
-  // if (position_ptr == &constants::position_right)
-  // {
-  //   audio_controller_ptr_->call(audio_controller::constants::playing_signal_property_name,
-  //     constants::set_value_string,
-  //     audio_controller::constants::playing_signal_bnc_b);
-  // }
-  // else
-  // {
-  //   audio_controller_ptr_->call(audio_controller::constants::playing_signal_property_name,
-  //     constants::set_value_string,
-  //     audio_controller::constants::playing_signal_bnc_a);
-  // }
+  long position_tone_frequency = getPositionToneFrequency();
+  long position_tone_volume = getPositionToneVolume();
+  long position_tone_delay = getPositionToneDelay();
+  long position_tone_duration = getPositionToneDuration();
 
-  // long position_tone_frequency = getPositionToneFrequency();
-  // long position_tone_volume = getPositionToneVolume();
-  // long position_tone_delay = getPositionToneDelay();
-  // long position_tone_duration = getPositionToneDuration();
+  const ConstantString * position_ptr;
+  modular_server_.property(constants::position_property_name).getValue(position_ptr);
 
-  // audio_controller_ptr_->call(audio_controller::constants::add_tone_pwm_at_function_name,
-  //   position_tone_frequency,
-  //   audio_controller::constants::speaker_all,
-  //   position_tone_volume,
-  //   position_tone_delay,
-  //   position_tone_duration,
-  //   position_tone_duration,
-  //   1);
+  EventIdPair event_id_pair;
+  if (position_ptr == &constants::position_right)
+  {
+     event_id_pair = event_controller_.addPwmUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setRightPositionSignalHighHandler),
+      makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setRightPositionSignalLowHandler),
+      position_tone_delay,
+      position_tone_duration+1,
+      position_tone_duration,
+      1);
+  }
+  else
+  {
+     event_id_pair = event_controller_.addPwmUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setLeftPositionSignalHighHandler),
+      makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setLeftPositionSignalLowHandler),
+      position_tone_delay,
+      position_tone_duration+1,
+      position_tone_duration,
+      1);
+  }
+  event_controller_.enable(event_id_pair);
+
+  audio_apparatus_.addTonePwmAt(position_tone_frequency,
+    audio_apparatus::constants::SPEAKER_ALL,
+    position_tone_volume,
+    position_tone_delay,
+    position_tone_duration+1,
+    position_tone_duration,
+    1);
 }
 
 void MouseReachLinearController::setWaitToDispenseState()
@@ -629,6 +633,10 @@ void MouseReachLinearController::buzz()
 
   modular_server::Pin & power_switch_pin = modular_server_.pin(constants::power_switch_pin_name);
   power_switch_pin.addPwm(buzz_period,buzz_on_duration,buzz_count);
+
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setMoveToLoadHandler),
+    buzz_period*buzz_count);
+  event_controller_.enable(event_id);
 }
 
 void MouseReachLinearController::tap()
@@ -639,13 +647,17 @@ void MouseReachLinearController::tap()
 
   modular_server::Pin & power_switch_pin = modular_server_.pin(constants::power_switch_pin_name);
   power_switch_pin.addPwm(tap_period,tap_on_duration,tap_count);
+
+  EventId event_id = event_controller_.addEventUsingDelay(makeFunctor((Functor1<int> *)0,*this,&MouseReachLinearController::setWaitAtLoadHandler),
+    tap_period*tap_count);
+  event_controller_.enable(event_id);
 }
 
 void MouseReachLinearController::startAssay()
 {
   stopAll();
-  event_controller_.removeAllEvents();
-  // audio_controller_ptr_->call(audio_controller::constants::stop_all_pwm_function_name);
+  // event_controller_.removeAllEvents();
+  // audio_apparatus_.stopAllPwm();
 
   assay_status_.state_ptr = &constants::state_assay_started_string;
 }
@@ -662,8 +674,8 @@ void MouseReachLinearController::dispense()
 void MouseReachLinearController::abort()
 {
   stopAll();
-  event_controller_.removeAllEvents();
-  // audio_controller_ptr_->call(audio_controller::constants::stop_all_pwm_function_name);
+  // event_controller_.removeAllEvents();
+  // audio_apparatus_.stopAllPwm();
 
   if (stageHomed())
   {
@@ -679,25 +691,6 @@ void MouseReachLinearController::setupDriver(size_t channel)
 {
   StepperController::setupDriver(channel);
   enable(channel);
-}
-
-void MouseReachLinearController::setClientPropertyValuesHandler()
-{
-  modular_server_.response().writeResultKey();
-
-  modular_server_.response().beginObject();
-
-  // bool call_was_successful;
-
-  modular_server_.response().writeKey(audio_controller::constants::device_name);
-  modular_server_.response().beginArray();
-  // audio_controller_ptr_->call(modular_server::constants::set_properties_to_defaults_function_name,
-  //   modular_server::constants::all_array);
-  // call_was_successful = audio_controller_ptr_->callWasSuccessful();
-  // modular_server_.response().write(call_was_successful);
-  modular_server_.response().endArray();
-
-  modular_server_.response().endObject();
 }
 
 void MouseReachLinearController::setDispenseVelocityLimitHandler(size_t channel)
@@ -768,6 +761,26 @@ void MouseReachLinearController::setMoveToNextDeliverPositionHandler(int arg)
   {
     setMoveToNextDeliverPositionState();
   }
+}
+
+void MouseReachLinearController::setLeftPositionSignalHighHandler(int arg)
+{
+  modular_server_.pin(constants::signal_c_pin_name).setValue(HIGH);
+}
+
+void MouseReachLinearController::setLeftPositionSignalLowHandler(int arg)
+{
+  modular_server_.pin(constants::signal_c_pin_name).setValue(LOW);
+}
+
+void MouseReachLinearController::setRightPositionSignalHighHandler(int arg)
+{
+  modular_server_.pin(constants::signal_d_pin_name).setValue(HIGH);
+}
+
+void MouseReachLinearController::setRightPositionSignalLowHandler(int arg)
+{
+  modular_server_.pin(constants::signal_d_pin_name).setValue(LOW);
 }
 
 void MouseReachLinearController::startAssayHandler(modular_server::Pin * pin_ptr)

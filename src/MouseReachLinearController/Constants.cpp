@@ -123,15 +123,15 @@ const long stage_position_max_1_2_element_default = 50;
 
 const long buzz_position_0_element_default = 10;
 const long buzz_position_1_element_default = 25;
-const long buzz_position_2_element_default = 40;
+const long buzz_position_2_element_default = 35;
 
 const long load_position_0_element_default = 1;
 const long load_position_1_element_default = 25;
-const long load_position_2_element_default = 40;
+const long load_position_2_element_default = 35;
 
 const long next_deliver_position_0_element_default = 17;
 const long next_deliver_position_1_element_default = 26;
-const long next_deliver_position_2_element_default = 44;
+const long next_deliver_position_2_element_default = 34;
 
 const long next_dispense_position_0_element_default = 13;
 const long next_dispense_position_1_element_default = 21;
@@ -228,7 +228,6 @@ const long dispense_velocity_1_2_element_default = 40;
 // Parameters
 
 // Functions
-CONSTANT_STRING(set_client_property_values_function_name,"setClientPropertyValues");
 CONSTANT_STRING(get_assay_status_function_name,"getAssayStatus");
 CONSTANT_STRING(play_position_tone_function_name,"playPositionTone");
 CONSTANT_STRING(buzz_function_name,"buzz");

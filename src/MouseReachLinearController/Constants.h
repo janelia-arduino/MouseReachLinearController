@@ -20,7 +20,7 @@ namespace constants
 //MAX values must be >= 1, >= created/copied count, < RAM limit
 enum{PROPERTY_COUNT_MAX=20};
 enum{PARAMETER_COUNT_MAX=1};
-enum{FUNCTION_COUNT_MAX=4};
+enum{FUNCTION_COUNT_MAX=3};
 enum{CALLBACK_COUNT_MAX=3};
 
 enum{EVENT_COUNT_MAX=32};
@@ -257,7 +257,6 @@ extern const long dispense_velocity_1_2_element_default;
 // Parameters
 
 // Functions
-extern ConstantString set_client_property_values_function_name;
 extern ConstantString get_assay_status_function_name;
 extern ConstantString play_position_tone_function_name;
 extern ConstantString buzz_function_name;
