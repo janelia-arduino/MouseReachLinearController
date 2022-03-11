@@ -192,11 +192,11 @@ void MouseReachLinearController::setup()
   // Callbacks
   modular_server::Callback & start_assay_callback = modular_server_.createCallback(constants::start_assay_callback_name);
   start_assay_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::startAssayHandler));
-  start_assay_callback.attachTo(signal_a_pin,modular_server::constants::pin_mode_interrupt_falling);
+  start_assay_callback.attachTo(signal_b_pin,modular_server::constants::pin_mode_interrupt_falling);
 
   modular_server::Callback & dispense_callback = modular_server_.createCallback(constants::dispense_callback_name);
   dispense_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::dispenseHandler));
-  dispense_callback.attachTo(signal_b_pin,modular_server::constants::pin_mode_interrupt_falling);
+  dispense_callback.attachTo(signal_a_pin,modular_server::constants::pin_mode_interrupt_falling);
 
   modular_server::Callback & abort_callback = modular_server_.createCallback(constants::abort_callback_name);
   abort_callback.attachFunctor(makeFunctor((Functor1<modular_server::Pin *> *)0,*this,&MouseReachLinearController::abortHandler));
