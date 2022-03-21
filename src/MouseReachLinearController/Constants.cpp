@@ -212,7 +212,7 @@ const long tap_period_default = 500;
 CONSTANT_STRING(tap_on_duration_property_name,"tapOnDuration");
 const long tap_on_duration_min = 1;
 const long tap_on_duration_max = 10000;
-const long tap_on_duration_default = 15;
+const long tap_on_duration_default = 40;
 
 CONSTANT_STRING(tap_count_property_name,"tapCount");
 const long tap_count_min = 1;
