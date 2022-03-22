@@ -1,17 +1,21 @@
 {
   "id": "getApi",
   "result": {
+    "ancestors": [
+      "ModularServer",
+      "ModularDeviceBase",
+      "StepDirController",
+      "StepperController",
+      "StageController"
+    ],
     "firmware": [
-      "MouseReachLinearController"
+      {
+        "name": "MouseReachLinearController",
+        "version": "1.0.0"
+      }
     ],
     "verbosity": "GENERAL",
     "functions": [
-      {
-        "name": "setClientPropertyValues",
-        "result_info": {
-          "type": "object"
-        }
-      },
       {
         "name": "getAssayStatus",
         "result_info": {
@@ -819,45 +823,6 @@
           {
             "name": "value",
             "type": "double"
-          }
-        ]
-      },
-      {
-        "name": "buzzPower",
-        "type": "long",
-        "functions": [
-          {
-            "name": "getValue",
-            "result_info": {
-              "type": "long"
-            }
-          },
-          {
-            "name": "setValue",
-            "parameters": [
-              "value"
-            ],
-            "result_info": {
-              "type": "long"
-            }
-          },
-          {
-            "name": "getDefaultValue",
-            "result_info": {
-              "type": "long"
-            }
-          },
-          {
-            "name": "setValueToDefault",
-            "result_info": {
-              "type": "long"
-            }
-          }
-        ],
-        "parameters": [
-          {
-            "name": "value",
-            "type": "long"
           }
         ]
       },
