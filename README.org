@@ -4,7 +4,7 @@
 
 * Library Information
 - Name :: MouseReachLinearController
-- Version :: 1.0.0
+- Version :: 1.0.1
 - License :: BSD
 - URL :: https://github.com/janelia-arduino/MouseReachLinearController
 - Author :: Peter Polidoro
@@ -35,7 +35,7 @@ Mouse reach linear controller firmware
     "firmware": [
       {
         "name": "MouseReachLinearController",
-        "version": "1.0.0"
+        "version": "1.0.1"
       }
     ],
     "verbosity": "NAMES",
@@ -76,3 +76,80 @@ Mouse reach linear controller firmware
 
 #+END_SRC
 
+* Development
+
+** PlatformIO
+
+*** Install PlatformIO Core
+
+[[https://docs.platformio.org/en/latest/core/installation/index.html]]
+
+**** Example
+
+#+BEGIN_SRC sh
+sudo apt install -y python3-venv
+mkdir -p ~/reach/venv
+python3 -m venv ~/reach/venv
+source ~/reach/venv/bin/activate
+pip install platformio
+pio --version
+#+END_SRC
+
+**** 99-platformio-udev.rules
+
+Linux users have to install udev rules for PlatformIO supported boards/devices.
+
+***** Download udev rules file to /etc/udev/rules.d
+
+#+BEGIN_SRC sh
+curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/system/99-platformio-udev.rules | sudo tee /etc/udev/rules.d/99-platformio-udev.rules
+#+END_SRC
+
+***** Restart udev management tool
+
+#+BEGIN_SRC sh
+sudo service udev restart
+#+END_SRC
+
+***** Add user to groups
+
+#+BEGIN_SRC sh
+sudo usermod -a -G dialout $USER
+sudo usermod -a -G plugdev $USER
+#+END_SRC
+
+***** Remove modemmanager
+
+#+BEGIN_SRC sh
+sudo apt-get purge --auto-remove modemmanager
+#+END_SRC
+
+*** Download this repository
+
+[[https://github.com/janelia-arduino/MouseReachLinearController.git]]
+
+**** Example
+
+#+BEGIN_SRC sh
+sudo apt install -y git
+cd ~/reach
+git clone https://github.com/janelia-arduino/MouseReachLinearController.git
+#+END_SRC
+
+*** Compile the firmware
+
+**** Example
+
+#+BEGIN_SRC sh
+cd ~/reach/MouseReachLinearController
+pio run -e teensy40
+#+END_SRC
+
+*** Upload the firmware
+
+**** Example
+
+#+BEGIN_SRC sh
+cd ~/reach/MouseReachLinearController
+pio run -e teensy40 -t upload
+#+END_SRC
