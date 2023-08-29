@@ -4,7 +4,7 @@
 
 * Library Information
 - Name :: MouseReachLinearController
-- Version :: 1.0.1
+- Version :: 1.0.2
 - License :: BSD
 - URL :: https://github.com/janelia-arduino/MouseReachLinearController
 - Author :: Peter Polidoro
@@ -78,6 +78,18 @@ Mouse reach linear controller firmware
 
 * Development
 
+** Download this repository
+
+[[https://github.com/janelia-arduino/MouseReachLinearController.git]]
+
+**** Example
+
+#+BEGIN_SRC sh
+sudo apt install -y git
+mkdir -p ~/tmp && cd ~/tmp
+git clone https://github.com/janelia-arduino/MouseReachLinearController.git
+#+END_SRC
+
 ** PlatformIO
 
 *** Install PlatformIO Core
@@ -88,9 +100,9 @@ Mouse reach linear controller firmware
 
 #+BEGIN_SRC sh
 sudo apt install -y python3-venv
-mkdir -p ~/reach/venv
-python3 -m venv ~/reach/venv
-source ~/reach/venv/bin/activate
+cd ~/tmp
+python3 -m venv .venv
+source .venv/bin/activate
 pip install platformio
 pio --version
 #+END_SRC
@@ -124,24 +136,13 @@ sudo usermod -a -G plugdev $USER
 sudo apt-get purge --auto-remove modemmanager
 #+END_SRC
 
-*** Download this repository
-
-[[https://github.com/janelia-arduino/MouseReachLinearController.git]]
-
-**** Example
-
-#+BEGIN_SRC sh
-sudo apt install -y git
-cd ~/reach
-git clone https://github.com/janelia-arduino/MouseReachLinearController.git
-#+END_SRC
 
 *** Compile the firmware
 
 **** Example
 
 #+BEGIN_SRC sh
-cd ~/reach/MouseReachLinearController
+cd ~/tmp/MouseReachLinearController
 pio run -e teensy40
 #+END_SRC
 
@@ -150,6 +151,6 @@ pio run -e teensy40
 **** Example
 
 #+BEGIN_SRC sh
-cd ~/reach/MouseReachLinearController
+cd ~/tmp/MouseReachLinearController
 pio run -e teensy40 -t upload
 #+END_SRC

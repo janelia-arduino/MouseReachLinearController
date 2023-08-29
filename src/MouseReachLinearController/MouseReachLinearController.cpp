@@ -5,7 +5,7 @@
 // Authors:
 // Peter Polidoro peter@polidoro.io
 // ----------------------------------------------------------------------------
-#include "../MouseReachLinearController.h"
+#include "MouseReachLinearController.h"
 
 
 using namespace mouse_reach_linear_controller;
